@@ -1,3 +1,7 @@
+body {
+  transition: background-color 500ms ease;
+}
+
 .main-body {
   position: absolute;
   height: 100vh;
@@ -6,6 +10,7 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  transition: background-color 500ms ease;
 }
 
 .colour-name {
@@ -37,4 +42,44 @@
   width: 100vw;
   background: #313D53;
   pointer-events: none;
+}
+
+.credit {
+  background-color: #313D53;
+  color: rgba(256, 256, 256, 0.4);
+  padding: 10px;
+  position: absolute;
+  border-top-right-radius: 10px;
+  bottom: 0;
+  left: 0;
+}
+
+.credit a {
+  color: white;
+  text-decoration: none;
+}
+
+.credit a::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: yellow;
+  visibility: hidden;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.credit a:hover {
+  color: yellow;
+}
+
+.credit a:hover::before {
+  visibility: visible;
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
 }

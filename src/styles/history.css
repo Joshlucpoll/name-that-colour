@@ -1,0 +1,21 @@
+.history-button-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 0 0 2rem 0 ;
+  padding: 1rem;
+  overflow: hidden;
+  background-color: rgba(256, 256, 256, 0.6);
+  cursor: pointer;
+}
+
+.history-icon {
+  height: 2rem;
+  transition: transform 200ms ease-out;
+}
+
+.history-button-container:hover .history-icon {
+ transform: scale(1.2);
+}

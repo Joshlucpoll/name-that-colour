@@ -1,0 +1,38 @@
+.random-button-container {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 2rem;
+  overflow: hidden;
+  background-color: rgba(256, 256, 256, 0.6);
+  box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.75);
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  padding: 1rem;
+
+  transition: all 200ms ease;
+}
+
+.random-icon {
+  height: 2rem;
+}
+
+.random-text {
+  display: none;
+  margin-left: 1rem;
+}
+
+.random-button-container:hover {
+  width: 7rem;
+  transition: all 200ms ease;
+}
+
+.random-button-container:hover .random-text {
+  display: initial;
+}
