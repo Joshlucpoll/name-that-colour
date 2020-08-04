@@ -6,10 +6,11 @@ body {
   position: absolute;
   height: 100vh;
   width: 100vw;
-
+  
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  overflow: hidden;
   transition: background-color 500ms ease;
 }
 
@@ -52,11 +53,24 @@ body {
   border-top-right-radius: 10px;
   bottom: 0;
   left: 0;
+  cursor: default;
+}
+
+.credit::selection {
+  color: none;
+  background: none;
+}
+
+.credit a::selection {
+  color: none;
+  background: none;
 }
 
 .credit a {
   color: white;
   text-decoration: none;
+  z-index: 100;
+  cursor: pointer;
 }
 
 .credit a::before {
@@ -68,9 +82,8 @@ body {
   left: 0;
   background-color: yellow;
   visibility: hidden;
-  -webkit-transform: scaleX(0);
   transform: scaleX(0);
-  -webkit-transition: all 0.3s ease-in-out 0s;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   transition: all 0.3s ease-in-out 0s;
 }
 

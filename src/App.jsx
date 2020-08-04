@@ -4,7 +4,7 @@ import "./styles/app.css";
 import Colours from "./assets/colours";
 // Components
 import RandomButton from "./components/randomButton";
-import History from "./components/history";
+import SideMenu from "./components/sideMenu";
 
 class App extends React.Component {
   constructor(props) {
@@ -65,7 +65,6 @@ class App extends React.Component {
     return (
       <div className="App">
         <div className="main-body" style={{ backgroundColor: this.state.currentColour.hex }}>
-          <History colourHistory={this.state.colourHistory}/>
           <motion.div className="title-container" layout="position">
             <motion.div className="colour-name info-border">{this.state.currentColour.name}</motion.div>
             <div className="info-container">
@@ -76,6 +75,7 @@ class App extends React.Component {
             </div>
           </motion.div>
 
+          <SideMenu colourHistory={this.state.colourHistory}/>
           <RandomButton onClick={() => this.getRandomColour()}/>
         </div>
 
