@@ -68,19 +68,6 @@ const itemVariants = {
   }
 };
 
-const tabVariants = {
-  initial: {
-    opacity: 0,
-  },
-  animate: {
-    opacity: 1,
-  },
-  exit: {
-    opacity: 0,
-  }
-}
-
-
 // Icons
 const HistoryIcon = () => (
   <svg fill="hsl(0, 0%, 18%)" width="24px" height="24px" viewBox="0 0 510 510">
@@ -188,18 +175,16 @@ const History = (props) => (
       variants={listVariants}
       custom={props.colourHistory.length}
     >
-      {props.colourHistory.map(colour => (
+      {props.colourHistory.map(colour => 
         <motion.li
           variants={itemVariants}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
           style={{ backgroundColor: colour.hex }}
-          key={colour.id}
-          positionTransition={{ duration: 0.5, ease: "backInOut" }}
         >
           {colour.name}
         </motion.li>
-      ))}
+      )}
     </motion.ul>
   </div>
 );

@@ -17,7 +17,10 @@ class App extends React.Component {
 
   setColour(colourNum) {
     let newHistory = this.state.colourHistory;
-    newHistory.unshift(Colours[colourNum]);
+
+    const colour = Colours[colourNum];
+    colour.id = newHistory.length;
+    newHistory.unshift(colour);
 
     this.setState({
       currentColour: Colours[colourNum],
