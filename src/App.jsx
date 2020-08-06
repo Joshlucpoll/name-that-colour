@@ -21,6 +21,10 @@ class App extends React.Component {
     }
   }
 
+  clearHistory() {
+    this.setState({ colourHistory: [this.state.currentColour.hex] })
+  }
+
   setColour(hex) {
     let newHistory = this.state.colourHistory;
 
@@ -158,7 +162,7 @@ class App extends React.Component {
             </div>
           </motion.div>
 
-          <SideMenu setColour={(hex) => this.setColour(hex)} colourHistory={this.state.colourHistory}/>
+          <SideMenu setColour={(hex) => this.setColour(hex)} colourHistory={this.state.colourHistory} clearHistory={() => this.clearHistory()}/>
           <RandomButton onClick={() => this.getRandomColour()}/>
         </div>
 

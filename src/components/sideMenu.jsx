@@ -1,5 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion"; 
+import Colours from "../assets/colours.json";
 import "../styles/sideMenu.css";
 
 
@@ -65,8 +66,9 @@ const itemVariants = {
     transition: {
       y: { stiffness: 1000 }
     }
-  }
+  },
 };
+
 
 // Icons
 const HistoryIcon = () => (
@@ -165,36 +167,85 @@ const TopBar = (props) => (
 );
 
 const History = (props) => (
-  <div className="history-container">
+  <motion.div 
+    className="history-container"
+    initial={{ y: 50, opacity: 0 }}
+    animate={{ y: 0, opacity: 1, transition: { delay: 0.3} }}
+    exit={{ y: 50, opacity: 0 }}
+  >
     <motion.div 
       className="history-title"
       variants={{ open: {opacity: 1}, closed: {opacity: 0, transition: {delay: 0.4}} }}
-    >History</motion.div>
+    >History
+    </motion.div>
+    <motion.div 
+      className="clear-button"
+      variants={{ open: {opacity: 1}, closed: {opacity: 0, transition: {delay: 0.2}} }}
+      onClick={props.clearHistory}
+    >Clear
+    </motion.div>
     <motion.ul
       className="history-list"
       variants={listVariants}
       custom={props.colourHistory.length}
     >
-      {props.colourHistory.map(colour => 
-        <motion.li
-          key={colour}
-          variants={itemVariants}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          style={{ backgroundColor: colour }}
-          onClick={() => props.setColour(colour)}
-          layout
-        >
-          {colour.name}
-        </motion.li>
-      )}
+      <AnimatePresence exitBeforeEnter>
+        {props.colourHistory.map(colour => 
+          <motion.li
+            key={colour}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => props.setColour(colour)}
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 50, opacity: 0 }}
+            layout
+            >
+            <motion.div
+              className="history-item"
+              variants={itemVariants}
+              style={{ backgroundColor: colour }}
+              key={colour + "-content"}
+            >
+              {Colours[colour]}
+            </motion.div>
+          </motion.li>
+        )}
+      </AnimatePresence>
     </motion.ul>
-  </div>
+  </motion.div>
 );
 
-const Settings = () => (
-  <div>Settings</div>
+const Settings = (props) => (
+  <motion.div
+    className="settings-container"
+    initial={{ y: 50, opacity: 0 }}
+    animate={{ y: 0, opacity: 1, transition: { delay: 0.3} }}
+    exit={{ y: 50, opacity: 0 }}
+  >
+    <motion.div 
+      className="settings-title"
+      variants={{ open: {opacity: 1}, closed: {opacity: 0, transition: {delay: 0.4}} }}
+    >Settings
+    </motion.div>
+  </motion.div>
 );
+
+const Acknowledgements = (props) => (
+  <motion.div
+    className="acknowledgements-container"
+    initial={{ y: 50, opacity: 0 }}
+    animate={{ y: 0, opacity: 1, transition: { delay: 0.3} }}
+    exit={{ y: 50, opacity: 0 }}
+  >
+    <motion.div 
+      className="acknowledgements-title"
+      variants={{ open: {opacity: 1}, closed: {opacity: 0, transition: {delay: 0.4}} }}
+    >Acknowledgements
+    </motion.div>
+  </motion.div>
+);
+
 
 
 class SideMenu extends React.Component {
@@ -228,16 +279,25 @@ class SideMenu extends React.Component {
         <motion.div className="sidebar-background" variants={sidebarVariants}/>
         <MenuButton toggleOpen={() => this.toggleOpen()}/>
         <TopBar changeTab={(tab) => this.changeTab(tab)}/>
+
         <AnimatePresence>
           {this.state.currentTab === "history" &&
-            <History setColour={(hex) => this.props.setColour(hex)} colourHistory={this.props.colourHistory}/>
+            <History 
+              setColour={(hex) => this.props.setColour(hex)} 
+              colourHistory={this.props.colourHistory} 
+              clearHistory={this.props.clearHistory}
+            />
           }
+        </AnimatePresence>
+        <AnimatePresence>
           {this.state.currentTab === "settings" &&
             <Settings/>
           }
-          {/* {this.state.currentTab === "acknowledgements" &&
-            
-          } */}
+        </AnimatePresence>
+        <AnimatePresence>
+          {this.state.currentTab === "acknowledgements" &&
+            <Acknowledgements/>
+          }
         </AnimatePresence>
       </motion.nav>
     );
