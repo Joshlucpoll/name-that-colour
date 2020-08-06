@@ -1,5 +1,5 @@
 .random-button-container {
-  position: absolute;
+  position: fixed;
   bottom: 18px;
   right: 15px;
   height: 40px;

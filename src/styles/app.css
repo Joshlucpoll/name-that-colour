@@ -16,6 +16,7 @@ body {
 
 .colour-name {
   font-size: 70px;
+  text-transform: capitalize;
 }
 
 .info-border {

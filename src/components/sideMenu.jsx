@@ -177,10 +177,13 @@ const History = (props) => (
     >
       {props.colourHistory.map(colour => 
         <motion.li
+          key={colour}
           variants={itemVariants}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
-          style={{ backgroundColor: colour.hex }}
+          style={{ backgroundColor: colour }}
+          onClick={() => props.setColour(colour)}
+          layout
         >
           {colour.name}
         </motion.li>
@@ -227,7 +230,7 @@ class SideMenu extends React.Component {
         <TopBar changeTab={(tab) => this.changeTab(tab)}/>
         <AnimatePresence>
           {this.state.currentTab === "history" &&
-            <History colourHistory={this.props.colourHistory}/>
+            <History setColour={(hex) => this.props.setColour(hex)} colourHistory={this.props.colourHistory}/>
           }
           {this.state.currentTab === "settings" &&
             <Settings/>
