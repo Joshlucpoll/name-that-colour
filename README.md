@@ -1,3 +1,5 @@
+[![time tracker](https://wakatime.com/badge/github/Joshlucpoll/name-that-colour.svg)](https://wakatime.com/badge/github/Joshlucpoll/name-that-colour)
+
 # Name That Colour
 
 ![](https://res.cloudinary.com/dy1xy7vkf/image/upload/name-that-colour.png)
