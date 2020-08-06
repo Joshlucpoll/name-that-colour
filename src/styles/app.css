@@ -1,5 +1,6 @@
 body {
   transition: background-color 500ms ease;
+  overflow: hidden;
 }
 
 .main-body {
@@ -50,7 +51,7 @@ body {
   background-color: #313D53;
   color: rgba(256, 256, 256, 0.4);
   padding: 10px;
-  position: absolute;
+  position: fixed;
   border-top-right-radius: 10px;
   bottom: 0;
   left: 0;
