@@ -7,7 +7,7 @@ import "../styles/sideMenu.css";
 // Variants
 const sidebarVariants = {
   open: {
-    clipPath: `circle(${window.innerHeight * 2 + 200}px at 40px 40px)`,
+    clipPath: `circle(${window.innerWidth + window.innerHeight * 2}px at 40px 40px)`,
     transition: {
       type: "spring",
       stiffness: 20,
@@ -189,7 +189,7 @@ const History = (props) => (
       variants={listVariants}
       custom={props.colourHistory.length}
     >
-      <AnimatePresence exitBeforeEnter>
+      <AnimatePresence>
         {props.colourHistory.map(colour => 
           <motion.li
             key={colour}
@@ -276,6 +276,7 @@ class SideMenu extends React.Component {
         animate={this.state.isOpen ? "open" : "closed"}
         style={this.state.isOpen ? {pointerEvents: "all"} : {pointerEvents: "none"}}
       >
+        <div className="background-filter" onClick={() => this.toggleOpen()}></div>
         <motion.div className="sidebar-background" variants={sidebarVariants}/>
         <MenuButton toggleOpen={() => this.toggleOpen()}/>
         <TopBar changeTab={(tab) => this.changeTab(tab)}/>
