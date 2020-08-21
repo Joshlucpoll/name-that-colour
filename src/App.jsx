@@ -1,10 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
+import Fuse from "fuse.js";
 import "./styles/app.css";
 // http://mkweb.bcgsc.ca/colornames/
 import Colours from "./assets/colours";
 // Components
-import RandomButton from "./components/randomButton";
+import SearchBar from "./components/searchBar";
 import SideMenu from "./components/sideMenu";
 
 class App extends React.Component {
@@ -19,6 +20,7 @@ class App extends React.Component {
       inputColour: "#000000",
       colourHistory: [],
     }
+    this.fuse = new Fuse(Object.values(Colours), {threshold: 0.4});
   }
 
   clearHistory() {
@@ -44,16 +46,25 @@ class App extends React.Component {
     })
   }
 
-  hexToRGB(hex) {
-    const hexNum = hex.slice(1);
-    const bigint = parseInt(hexNum, 16);
-
-    return [
-      (bigint >> 16) & 255, // r
-      (bigint >> 8) & 255,  // g
-      bigint & 255          // b
-    ];
+  rgbToHex(r, g, b) {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
   }
+
+  hexToRGB(hex) {
+    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+      return r + r + g + g + b + b;
+    });
+  
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? [
+      parseInt(result[1], 16),
+      parseInt(result[2], 16),
+      parseInt(result[3], 16)
+     ] : null;
+  }
+  
 
   hexToHSL(hex) {
     let [ r, g, b ] = this.hexToRGB(hex);
@@ -111,9 +122,10 @@ class App extends React.Component {
     colours.forEach((item) => {
       const listHexColour = item.slice(1);
       const [ arrayR, arrayG, arrayB ] = this.hexToRGB(listHexColour);
-      
-      const vector = Math.sqrt( (inputR - arrayR) ** 2 + (inputB - arrayB) ** 2 + (inputG - arrayG) ** 2);
 
+      
+      const vector = Math.sqrt((inputR - arrayR) ** 2 + (inputB - arrayB) ** 2 + (inputG - arrayG) ** 2);
+      
       if (vector < shortestVector) {
         shortestVector = vector;
         closestColour = item
@@ -123,24 +135,34 @@ class App extends React.Component {
     this.setColour(closestColour);
   }
 
+  searchColours(query) {
+    if (query.type === "name") {
+      const results = this.fuse.search(query.value);
+      if (results.length > 0) {
+        this.setColour(Object.keys(Colours)[results[0].refIndex]);
+      }
+    }
+
+    else if (query.type === "hex") {
+      this.getClosestColour(query.value);
+    }
+
+    else if (query.type === "rgb") {
+      this.rgbToHex(query.value.r, query.value.g, query.value.b);
+    }
+
+    else if (query.type === "pick") {
+      this.getClosestColour(query.value);
+    }
+  }
+
   getRandomColour() {
     const randomHexColour = '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
     this.getClosestColour(randomHexColour);
   }
 
-  handleKeypress(e) {
-    if (e.key === "r") {
-      this.getRandomColour();
-    }
-  }
-
   componentDidMount() {
     this.getRandomColour();
-    window.addEventListener("keypress", (e) => this.handleKeypress(e));
-  }
-  
-  componentWillUnmount() {
-    window.removeEventListener("keypress", (e) => this.handleKeypress(e));
   }
   
   componentDidUpdate(prevState) {
@@ -162,8 +184,8 @@ class App extends React.Component {
             </div>
           </motion.div>
 
+          <SearchBar randomColour={() => this.getRandomColour()} searchColours={(query) => this.searchColours(query)}/>
           <SideMenu setColour={(hex) => this.setColour(hex)} colourHistory={this.state.colourHistory} clearHistory={() => this.clearHistory()}/>
-          <RandomButton onClick={() => this.getRandomColour()}/>
         </div>
 
           <div className="overlay-container">
@@ -177,7 +199,7 @@ class App extends React.Component {
               transition={{ duration: 1, delay: 1, ease: [.82, .45, .32, .84] }}
             >
             </motion.div>
-            <div className="credit">Made by <a href="https://joshlucpoll.com" target="_blank" rel="noopener noreferrer">Joshlucpoll</a></div>
+            {/* <div className="credit">Made by <a href="https://joshlucpoll.com" target="_blank" rel="noopener noreferrer">Joshlucpoll</a></div> */}
           </div>
       </div>
     );
