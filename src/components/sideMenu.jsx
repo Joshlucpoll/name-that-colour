@@ -1,18 +1,19 @@
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion"; 
+import { motion, AnimatePresence } from "framer-motion";
 import Colours from "../assets/colours.json";
 import "../styles/sideMenu.css";
-
 
 // Variants
 const sidebarVariants = {
   open: {
-    clipPath: `circle(${window.innerWidth + window.innerHeight * 2}px at 40px 40px)`,
+    clipPath: `circle(${
+      window.innerWidth + window.innerHeight * 2
+    }px at 40px 40px)`,
     transition: {
       type: "spring",
       stiffness: 20,
-      restDelta: 2
-    }
+      restDelta: 2,
+    },
   },
   closed: {
     clipPath: "circle(30px at 40px 40px)",
@@ -20,36 +21,35 @@ const sidebarVariants = {
       delay: 0.5,
       type: "spring",
       stiffness: 400,
-      damping: 40
-    }
-  }
+      damping: 40,
+    },
+  },
 };
 
 const listVariants = {
   open: {
-    transition: { staggerChildren: 0.07, delayChildren: 0.2 }
+    transition: { staggerChildren: 0.07, delayChildren: 0.2 },
   },
-  closed: i => ({
-    transition: {staggerChildren: 0.5/i, staggerDirection: -1 }
-  })
+  closed: (i) => ({
+    transition: { staggerChildren: 0.5 / i, staggerDirection: -1 },
+  }),
 };
-
 
 const topbarItemVariants = {
   open: {
     rotate: 0,
     opacity: 1,
     transition: {
-      y: { stiffness: 1000, velocity: -100 }
-    }
+      y: { stiffness: 1000, velocity: -100 },
+    },
   },
   closed: {
     rotate: 180,
     opacity: 0,
     transition: {
-      y: { stiffness: 1000 }
-    }
-  }
+      y: { stiffness: 1000 },
+    },
+  },
 };
 
 const itemVariants = {
@@ -57,28 +57,29 @@ const itemVariants = {
     y: 0,
     opacity: 1,
     transition: {
-      y: { stiffness: 1000, velocity: -100 }
-    }
+      y: { stiffness: 1000, velocity: -100 },
+    },
   },
   closed: {
     y: 50,
     opacity: 0,
     transition: {
-      y: { stiffness: 1000 }
-    }
+      y: { stiffness: 1000 },
+    },
   },
 };
-
 
 // Icons
 const HistoryIcon = () => (
   <svg fill="hsl(0, 0%, 18%)" width="24px" height="24px" viewBox="0 0 510 510">
     <g>
       <g id="history">
-        <path d="M267.75,12.75c-89.25,0-168.3,48.45-209.1,122.4L0,76.5v165.75h165.75
+        <path
+          d="M267.75,12.75c-89.25,0-168.3,48.45-209.1,122.4L0,76.5v165.75h165.75
         l-71.4-71.4c33.15-63.75,96.9-107.1,173.4-107.1C372.3,63.75,459,150.45,459,255s-86.7,191.25-191.25,191.25
         c-84.15,0-153-53.55-181.05-127.5H33.15c28.05,102,122.4,178.5,234.6,178.5C402.9,497.25,510,387.6,510,255
-        C510,122.4,400.35,12.75,267.75,12.75z M229.5,140.25V270.3l119.85,71.4l20.4-33.15l-102-61.2v-107.1H229.5z" />
+        C510,122.4,400.35,12.75,267.75,12.75z M229.5,140.25V270.3l119.85,71.4l20.4-33.15l-102-61.2v-107.1H229.5z"
+        />
       </g>
     </g>
   </svg>
@@ -92,11 +93,10 @@ const SettingsIcon = () => (
 
 const CodeIcon = () => (
   <svg fill="hsl(0, 0%, 18%)" height="24" viewBox="0 0 24 24" width="24">
-    <path d="M0 0h24v24H0V0z" fill="none"/>
-    <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+    <path d="M0 0h24v24H0V0z" fill="none" />
+    <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z" />
   </svg>
 );
-
 
 // Components
 const Path = (props) => (
@@ -110,26 +110,26 @@ const Path = (props) => (
 );
 
 const MenuButton = (props) => (
-  <button onClick={props.toggleOpen} style={{pointerEvents: "all"}}>
+  <button onClick={props.toggleOpen} style={{ pointerEvents: "all" }}>
     <svg width="23" height="23" viewBox="0 0 23 23">
       <Path
         variants={{
           closed: { d: "M 2 2.5 L 20 2.5" },
-          open: { d: "M 3 16.5 L 17 2.5" }
+          open: { d: "M 3 16.5 L 17 2.5" },
         }}
       />
       <Path
         d="M 2 9.423 L 20 9.423"
         variants={{
           closed: { opacity: 1 },
-          open: { opacity: 0 }
+          open: { opacity: 0 },
         }}
         transition={{ duration: 0.1 }}
       />
       <Path
         variants={{
           closed: { d: "M 2 16.346 L 20 16.346" },
-          open: { d: "M 3 2.5 L 17 16.346" }
+          open: { d: "M 3 2.5 L 17 16.346" },
         }}
       />
     </svg>
@@ -137,7 +137,7 @@ const MenuButton = (props) => (
 );
 
 const TopBar = (props) => (
-  <motion.ul 
+  <motion.ul
     className="sidebar-top-container"
     variants={listVariants}
     custom={3}
@@ -147,42 +147,50 @@ const TopBar = (props) => (
       variants={topbarItemVariants}
       onClick={() => props.changeTab("history")}
     >
-      <HistoryIcon/>
+      <HistoryIcon />
     </motion.li>
     <motion.li
       className="button-container"
       variants={topbarItemVariants}
       onClick={() => props.changeTab("settings")}
     >
-      <SettingsIcon/>
+      <SettingsIcon />
     </motion.li>
     <motion.li
       className="button-container"
       variants={topbarItemVariants}
       onClick={() => props.changeTab("acknowledgements")}
     >
-      <CodeIcon/>
+      <CodeIcon />
     </motion.li>
   </motion.ul>
 );
 
 const History = (props) => (
-  <motion.div 
+  <motion.div
     className="history-container"
     initial={{ y: 50, opacity: 0 }}
-    animate={{ y: 0, opacity: 1, transition: { delay: 0.3} }}
+    animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
     exit={{ y: 50, opacity: 0 }}
   >
-    <motion.div 
+    <motion.div
       className="history-title"
-      variants={{ open: {opacity: 1}, closed: {opacity: 0, transition: {delay: 0.4}} }}
-    >History
+      variants={{
+        open: { opacity: 1 },
+        closed: { opacity: 0, transition: { delay: 0.4 } },
+      }}
+    >
+      History
     </motion.div>
-    <motion.div 
+    <motion.div
       className="clear-button"
-      variants={{ open: {opacity: 1}, closed: {opacity: 0, transition: {delay: 0.2}} }}
+      variants={{
+        open: { opacity: 1 },
+        closed: { opacity: 0, transition: { delay: 0.2 } },
+      }}
       onClick={props.clearHistory}
-    >Clear
+    >
+      Clear
     </motion.div>
     <motion.ul
       className="history-list"
@@ -190,7 +198,7 @@ const History = (props) => (
       custom={props.colourHistory.length}
     >
       <AnimatePresence>
-        {props.colourHistory.map(colour => 
+        {props.colourHistory.map((colour) => (
           <motion.li
             key={colour}
             whileHover={{ scale: 1.1 }}
@@ -200,7 +208,7 @@ const History = (props) => (
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 50, opacity: 0 }}
             layout
-            >
+          >
             <motion.div
               className="history-item"
               variants={itemVariants}
@@ -210,7 +218,7 @@ const History = (props) => (
               {Colours[colour]}
             </motion.div>
           </motion.li>
-        )}
+        ))}
       </AnimatePresence>
     </motion.ul>
   </motion.div>
@@ -220,13 +228,17 @@ const Settings = (props) => (
   <motion.div
     className="settings-container"
     initial={{ y: 50, opacity: 0 }}
-    animate={{ y: 0, opacity: 1, transition: { delay: 0.3} }}
+    animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
     exit={{ y: 50, opacity: 0 }}
   >
-    <motion.div 
+    <motion.div
       className="settings-title"
-      variants={{ open: {opacity: 1}, closed: {opacity: 0, transition: {delay: 0.4}} }}
-    >Settings
+      variants={{
+        open: { opacity: 1 },
+        closed: { opacity: 0, transition: { delay: 0.4 } },
+      }}
+    >
+      Settings
     </motion.div>
   </motion.div>
 );
@@ -235,18 +247,20 @@ const Acknowledgements = (props) => (
   <motion.div
     className="acknowledgements-container"
     initial={{ y: 50, opacity: 0 }}
-    animate={{ y: 0, opacity: 1, transition: { delay: 0.3} }}
+    animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
     exit={{ y: 50, opacity: 0 }}
   >
-    <motion.div 
+    <motion.div
       className="acknowledgements-title"
-      variants={{ open: {opacity: 1}, closed: {opacity: 0, transition: {delay: 0.4}} }}
-    >Acknowledgements
+      variants={{
+        open: { opacity: 1 },
+        closed: { opacity: 0, transition: { delay: 0.4 } },
+      }}
+    >
+      Acknowledgements
     </motion.div>
   </motion.div>
 );
-
-
 
 class SideMenu extends React.Component {
   constructor(props) {
@@ -262,44 +276,60 @@ class SideMenu extends React.Component {
   }
 
   toggleOpen() {
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
         isOpen: !prevState.isOpen,
-      }
-    })
+      };
+    });
   }
 
   render() {
     return (
-      <motion.nav 
+      <motion.nav
         initial={false}
         animate={this.state.isOpen ? "open" : "closed"}
-        style={this.state.isOpen ? {pointerEvents: "all"} : {pointerEvents: "none"}}
+        style={
+          this.state.isOpen
+            ? { pointerEvents: "all" }
+            : { pointerEvents: "none" }
+        }
       >
-        <div className="background-filter" onClick={() => this.toggleOpen()}></div>
-        <motion.div className="sidebar-background" variants={sidebarVariants}/>
-        <MenuButton toggleOpen={() => this.toggleOpen()}/>
-        <TopBar changeTab={(tab) => this.changeTab(tab)}/>
+        <div
+          className="background-filter"
+          onClick={() => this.toggleOpen()}
+        ></div>
+        <motion.div className="sidebar-background" variants={sidebarVariants} />
+        <MenuButton toggleOpen={() => this.toggleOpen()} />
+        <TopBar changeTab={(tab) => this.changeTab(tab)} />
 
         <AnimatePresence>
-          {this.state.currentTab === "history" &&
-            <History 
-              setColour={(hex) => this.props.setColour(hex)} 
-              colourHistory={this.props.colourHistory} 
+          {this.state.currentTab === "history" && (
+            <History
+              setColour={(hex) => this.props.setColour(hex)}
+              colourHistory={this.props.colourHistory}
               clearHistory={this.props.clearHistory}
             />
-          }
+          )}
         </AnimatePresence>
         <AnimatePresence>
-          {this.state.currentTab === "settings" &&
-            <Settings/>
-          }
+          {this.state.currentTab === "settings" && <Settings />}
         </AnimatePresence>
         <AnimatePresence>
-          {this.state.currentTab === "acknowledgements" &&
-            <Acknowledgements/>
-          }
+          {this.state.currentTab === "acknowledgements" && <Acknowledgements />}
         </AnimatePresence>
+        <motion.div
+          className="credit"
+          variants={{ open: {opacity: 1}, closed: {opacity: 0, transition: {delay: 0.4}} }}
+        >
+          Made by{" "}
+          <a
+            href="https://joshlucpoll.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Joshlucpoll
+          </a>
+        </motion.div>
       </motion.nav>
     );
   }
