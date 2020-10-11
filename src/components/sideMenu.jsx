@@ -166,12 +166,38 @@ const TopBar = (props) => (
   </motion.ul>
 );
 
+function hexToRgb(hex) {
+  // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+  var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+  hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+    return r + r + g + g + b + b;
+  });
+
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : null;
+}
+
+function getInverse(colour) {
+  const rgb = hexToRgb(colour);
+  const lum = .2126 * rgb.r + .7152 * rgb.g + .0722 * rgb.b;
+  if (lum > 128) {
+    return "#000"
+  }
+  else {
+    return "#fff"
+  }
+}
+
 const History = (props) => (
   <motion.div
     className="history-container"
-    initial={{ y: 50, opacity: 0 }}
-    animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
-    exit={{ y: 50, opacity: 0 }}
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1, transition: { delay: 0.3 } }}
+    exit={{ opacity: 0 }}
   >
     <motion.div
       className="history-title"
@@ -212,7 +238,7 @@ const History = (props) => (
             <motion.div
               className="history-item"
               variants={itemVariants}
-              style={{ backgroundColor: colour }}
+              style={{ backgroundColor: colour, color: getInverse(colour) }}
               key={colour + "-content"}
             >
               {Colours[colour]}
@@ -227,9 +253,9 @@ const History = (props) => (
 const Settings = (props) => (
   <motion.div
     className="settings-container"
-    initial={{ y: 50, opacity: 0 }}
-    animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
-    exit={{ y: 50, opacity: 0 }}
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1, transition: { delay: 0.3 } }}
+    exit={{ opacity: 0 }}
   >
     <motion.div
       className="settings-title"
@@ -246,9 +272,9 @@ const Settings = (props) => (
 const Acknowledgements = (props) => (
   <motion.div
     className="acknowledgements-container"
-    initial={{ y: 50, opacity: 0 }}
-    animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
-    exit={{ y: 50, opacity: 0 }}
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1, transition: { delay: 0.3 } }}
+    exit={{ opacity: 0 }}
   >
     <motion.div
       className="acknowledgements-title"
@@ -259,7 +285,34 @@ const Acknowledgements = (props) => (
     >
       Acknowledgements
     </motion.div>
-  </motion.div>
+    <motion.div
+      className="acknowledgements-wrapper"
+      variants={{
+        open: { opacity: 1 },
+        closed: { opacity: 0, transition: { delay: 0.4 } },
+      }}
+    >
+      <a href="http://mkweb.bcgsc.ca/colornames/" target="_blank" rel="noopener noreferrer">
+        Colour names database
+      </a>
+      <a href="https://en.wikipedia.org/wiki/Color_difference" target="_blank" rel="noopener noreferrer">
+        Closest colour function
+      </a>
+      <motion.div
+        className="credit"
+        // variants={{ open: {opacity: 1}, closed: {opacity: 0, transition: {delay: 0.4}} }}
+      >
+        Made by{" "}
+        <a
+          href="https://joshlucpoll.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Joshlucpoll
+        </a>
+      </motion.div>
+    </motion.div>
+    </motion.div>
 );
 
 class SideMenu extends React.Component {
@@ -317,19 +370,6 @@ class SideMenu extends React.Component {
         <AnimatePresence>
           {this.state.currentTab === "acknowledgements" && <Acknowledgements />}
         </AnimatePresence>
-        <motion.div
-          className="credit"
-          variants={{ open: {opacity: 1}, closed: {opacity: 0, transition: {delay: 0.4}} }}
-        >
-          Made by{" "}
-          <a
-            href="https://joshlucpoll.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Joshlucpoll
-          </a>
-        </motion.div>
       </motion.nav>
     );
   }

@@ -130,8 +130,8 @@ button {
   height: 100%;
   width: 100%;
   border-radius: 10px;
-  text-transform: capitalize;
   font-weight: 300;
+  text-transform: capitalize;
   
   display: flex;
   align-items: center;
@@ -181,6 +181,22 @@ button {
   font-weight: 500;
 }
 
+.acknowledgements-wrapper {
+  position: relative;
+  margin: 0;
+  margin-top: 15px;
+  padding: 25px;
+  padding-top: 10px;
+  width: calc(100% - 50px);
+  height: calc(100% - 160px);
+
+  display: flex;
+  flex-direction: column;
+}
+
+.acknowledgements-wrapper a {
+  margin: 10px 0;
+}
 
 .credit {
   background-color: #313D53;

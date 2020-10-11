@@ -148,7 +148,13 @@ class App extends React.Component {
     }
 
     else if (query.type === "rgb") {
-      this.rgbToHex(query.value.r, query.value.g, query.value.b);
+      this.getClosestColour(
+        this.rgbToHex(
+          query.value.r,
+          query.value.g,
+          query.value.b
+        )
+      );
     }
 
     else if (query.type === "pick") {
@@ -199,7 +205,6 @@ class App extends React.Component {
               transition={{ duration: 1, delay: 1, ease: [.82, .45, .32, .84] }}
             >
             </motion.div>
-            {/* <div className="credit">Made by <a href="https://joshlucpoll.com" target="_blank" rel="noopener noreferrer">Joshlucpoll</a></div> */}
           </div>
       </div>
     );
