@@ -72,7 +72,10 @@ class SearchBar extends React.Component {
   toggleBar() {
     this.setState({ isOpen: !this.state.isOpen }, () => {
       if (this.state.isOpen) {
-        this.searchInput.current.focus();
+        try {
+          this.searchInput.current.focus();
+        }
+        catch {}
       }
     });
   }
